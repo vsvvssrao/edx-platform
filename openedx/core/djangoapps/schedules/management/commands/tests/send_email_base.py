@@ -136,7 +136,7 @@ class ScheduleSendEmailTestMixin(FilteredQueryCountMixin):
 
     def _schedule_factory(self, offset=None, **factory_kwargs):
         _, _, target_day, upgrade_deadline = self._get_dates(offset=offset)
-        factory_kwargs.setdefault('start', target_day)
+        factory_kwargs.setdefault('start_date', target_day)
         factory_kwargs.setdefault('upgrade_deadline', upgrade_deadline)
         factory_kwargs.setdefault('enrollment__course__self_paced', True)
         # Make all schedules in the same course
@@ -345,7 +345,7 @@ class ScheduleSendEmailTestMixin(FilteredQueryCountMixin):
         end_date_offset = -2 if has_course_ended else 2
         self._schedule_factory(
             enrollment__user=user1,
-            enrollment__course__start=current_day - datetime.timedelta(days=30),
+            enrollment__course__start_date=current_day - datetime.timedelta(days=30),
             enrollment__course__end=current_day + datetime.timedelta(days=end_date_offset)
         )
 
