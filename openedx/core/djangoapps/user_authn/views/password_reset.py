@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.views import password_reset_confirm
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import ValidationError
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
@@ -325,7 +325,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
     except (ValueError, User.DoesNotExist):
         # if there's any error getting a user, just let django's
         # password_reset_confirm function handle it.
-        return password_reset_confirm(
+        return PasswordResetConfirmView(
             request, uidb64=uidb64, token=token, extra_context=platform_name
         )
 
@@ -385,7 +385,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
             )
 
         if 'is_account_recovery' in request.GET:
-            response = password_reset_confirm(
+            response = PasswordResetConfirmView(
                 request,
                 uidb64=uidb64,
                 token=token,
@@ -394,7 +394,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
                 post_reset_redirect='signin_user',
             )
         else:
-            response = password_reset_confirm(
+            response = PasswordResetConfirmView(
                 request, uidb64=uidb64, token=token, extra_context=platform_name
             )
 
@@ -454,7 +454,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
                 extra_tags='account-recovery aa-icon submission-success'
             )
     else:
-        response = password_reset_confirm(
+        response = PasswordResetConfirmView(
             request, uidb64=uidb64, token=token, extra_context=platform_name
         )
 
