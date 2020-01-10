@@ -327,8 +327,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
         # password_reset_confirm function handle it.
 
         password_reset_confirm_view = PasswordResetConfirmView()
-        password_reset_confirm_view.request = request
-        return password_reset_confirm_view.dispatch(uidb64=uidb64, token=token, extra_context=platform_name)
+        return password_reset_confirm_view.dispatch(request, uidb64=uidb64, token=token, extra_context=platform_name)
 
     if UserRetirementRequest.has_user_requested_retirement(user):
         # Refuse to reset the password of any user that has requested retirement.
@@ -387,14 +386,12 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
 
         if 'is_account_recovery' in request.GET:
             password_reset_confirm_view = PasswordResetConfirmView()
-            password_reset_confirm_view.request = request
             password_reset_confirm_view.template_name = 'registration/password_reset_confirm.html',
-            response = password_reset_confirm_view.dispatch(uidb64=uidb64, token=token, extra_context=platform_name)
+            response = password_reset_confirm_view.dispatch(request, uidb64=uidb64, token=token, extra_context=platform_name)
 
         else:
             password_reset_confirm_view = PasswordResetConfirmView()
-            password_reset_confirm_view.request = request
-            response = password_reset_confirm_view.dispatch(uidb64=uidb64, token=token, extra_context=platform_name)
+            response = password_reset_confirm_view.dispatch(request, uidb64=uidb64, token=token, extra_context=platform_name)
 
         # If password reset was unsuccessful a template response is returned (status_code 200).
         # Check if form is invalid then show an error to the user.
@@ -453,8 +450,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
             )
     else:
         password_reset_confirm_view = PasswordResetConfirmView()
-        password_reset_confirm_view.request = request
-        response = password_reset_confirm_view.dispatch(uidb64=uidb64, token=token, extra_context=platform_name)
+        response = password_reset_confirm_view.dispatch(request, uidb64=uidb64, token=token, extra_context=platform_name)
 
         response_was_successful = response.context_data.get('validlink')
         if response_was_successful and not user.is_active:
