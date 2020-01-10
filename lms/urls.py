@@ -43,6 +43,7 @@ from openedx.core.djangoapps.plugins import plugin_urls
 from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.self_paced.models import SelfPacedConfiguration
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.user_authn.config.waffle import ENABLE_LOGIN_USING_THIRDPARTY_AUTH_ONLY
 from openedx.core.djangoapps.verified_track_content import views as verified_track_content_views
 from openedx.core.apidocs import schema_view
 from openedx.features.enterprise_support.api import enterprise_enabled
@@ -766,6 +767,13 @@ if settings.FEATURES.get('CLASS_DASHBOARD'):
     ]
 
 if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
+    # We are enforcing users to login through third party auth in site's
+    # login page so we are disabling the admin panel's login page.
+    if ENABLE_LOGIN_USING_THIRDPARTY_AUTH_ONLY.is_enabled():
+        urlpatterns += [
+            url(r'^admin/login/$', RedirectView.as_view(url='/login')),
+        ]
+
     # Jasmine and admin
     urlpatterns += [
         # The password pages in the admin tool are disabled so that all password
