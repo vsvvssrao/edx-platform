@@ -71,6 +71,3 @@ python3-saml==1.5.0
 #   https://github.com/transifex/transifex-client/issues/252
 transifex-client==0.13.4
 
-
-# Its new version drops support for python2 thats why adding constraint here.
-django-filter<2.1.0
