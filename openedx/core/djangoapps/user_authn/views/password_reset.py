@@ -445,7 +445,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
             )
     else:
         response = PasswordResetConfirmView.as_view()(request, uidb64=uidb64, token=token, extra_context=platform_name)
-        response_was_successful = response.context_data.get('validlink')
+        response_was_successful = response.context.get('validlink')
         if response_was_successful and not user.is_active:
             user.is_active = True
             user.save()
