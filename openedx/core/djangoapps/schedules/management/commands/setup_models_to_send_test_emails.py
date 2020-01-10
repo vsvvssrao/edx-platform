@@ -69,7 +69,7 @@ class Command(BaseCommand):
         XMODULE_FACTORY_LOCK.enable()
         CourseFactory.reset_sequence(max_org_sequence_id + 1, force=True)
         course = CourseFactory.create(
-            start=datetime.datetime.today() - datetime.timedelta(days=30),
+            start_date=datetime.datetime.today() - datetime.timedelta(days=30),
             end=datetime.datetime.today() + datetime.timedelta(days=30),
             number=factory.Sequence('schedules_test_course_{}'.format),
             display_name=factory.Sequence(u'Schedules Test Course {}'.format),

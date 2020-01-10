@@ -241,7 +241,7 @@ class RecurringNudgeResolver(BinnedSchedulesBaseResolver):
     Send a message to all users whose schedule started at ``self.current_date`` + ``day_offset``.
     """
     log_prefix = 'Recurring Nudge'
-    schedule_date_field = 'start'
+    schedule_date_field = 'start_date'
     num_bins = RECURRING_NUDGE_NUM_BINS
 
     @property

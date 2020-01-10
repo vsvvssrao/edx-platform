@@ -66,12 +66,12 @@ class KnownErrorCases(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            ('schedule_start', _('Schedule start < course start')),
+            ('schedule_start_date', _('Schedule start < course start')),
         )
 
     def queryset(self, request, queryset):
-        if self.value() == 'schedule_start':
-            return queryset.filter(start__lt=F('enrollment__course__start'))
+        if self.value() == 'schedule_start_date':
+            return queryset.filter(start_date_date__lt=F('enrollment__course__start'))
 
 
 class CourseIdFilter(admin.SimpleListFilter):
