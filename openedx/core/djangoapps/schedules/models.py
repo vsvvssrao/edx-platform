@@ -24,7 +24,6 @@ class Schedule(TimeStampedModel):
         help_text=_('Date this schedule went into effect')
     )
     start_date = models.DateTimeField(
-        # TODO remove blank=True and null=True once data migration is complete in column rename release.
         db_index=True,
         help_text=_('Date this schedule went into effect')
     )
